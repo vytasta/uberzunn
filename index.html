@@ -63,6 +63,7 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             letter-spacing: -0.5px;
+            cursor: pointer;
         }
 
         .nav-links {
@@ -78,6 +79,7 @@
             font-weight: 500;
             transition: color 0.3s;
             font-size: 0.95rem;
+            cursor: pointer;
         }
 
         .nav-links a:hover {
@@ -98,6 +100,15 @@
         .nav-cta:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+        }
+
+        /* Sections */
+        section {
+            display: none;
+        }
+
+        section.active {
+            display: block;
         }
 
         /* Hero Section */
@@ -319,73 +330,165 @@
             line-height: 1.8;
         }
 
-        /* Why Choose Us */
-        .why-us {
+        /* Contributions Section */
+        .contributions {
             padding: 8rem 2rem;
-            background: linear-gradient(135deg, var(--dark) 0%, var(--dark-light) 100%);
-            color: white;
+            background: var(--light);
         }
 
-        .why-us-content {
+        .contributions-grid {
             max-width: 1400px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 6rem;
-            align-items: center;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
         }
 
-        .stats-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-        }
-
-        .stat-card {
-            padding: 2rem;
-            background: rgba(255, 255, 255, 0.05);
+        .contribution-card {
+            background: white;
             border-radius: 20px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
         }
 
-        .stat-number {
-            font-size: 3rem;
-            font-weight: 800;
+        .contribution-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .contribution-image {
+            width: 100%;
+            height: 200px;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 1.1rem;
-        }
-
-        .features-list {
-            list-style: none;
-        }
-
-        .features-list li {
-            padding: 1.5rem 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            font-size: 1.1rem;
-        }
-
-        .check-icon {
-            width: 28px;
-            height: 28px;
-            background: var(--secondary);
-            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            flex-shrink: 0;
+            color: white;
+            font-size: 3rem;
+        }
+
+        .contribution-content {
+            padding: 2rem;
+        }
+
+        .contribution-content h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .contribution-content p {
+            color: var(--gray);
+            line-height: 1.8;
+        }
+
+        /* About Section */
+        .about {
+            padding: 8rem 2rem;
+            background: white;
+        }
+
+        .about-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .about-image {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 20px;
+            margin-bottom: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 4rem;
+        }
+
+        .about-text {
+            font-size: 1.2rem;
+            line-height: 2;
+            color: var(--gray);
+            text-align: center;
+        }
+
+        /* Blog Section */
+        .blog {
+            padding: 8rem 2rem;
+            background: white;
+        }
+
+        .blog-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+        }
+
+        .blog-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .blog-image {
+            width: 100%;
+            height: 220px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+
+        .blog-content {
+            padding: 2rem;
+        }
+
+        .blog-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .blog-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+            line-height: 1.4;
+        }
+
+        .blog-excerpt {
+            color: var(--gray);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .read-more {
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .read-more:hover {
+            gap: 0.75rem;
         }
 
         /* CTA Section */
@@ -452,6 +555,7 @@
             color: rgba(255, 255, 255, 0.6);
             text-decoration: none;
             transition: color 0.3s;
+            cursor: pointer;
         }
 
         .footer-links a:hover {
@@ -486,10 +590,6 @@
                 justify-content: center;
             }
 
-            .why-us-content {
-                grid-template-columns: 1fr;
-            }
-
             .footer-content {
                 grid-template-columns: 1fr;
                 text-align: center;
@@ -499,7 +599,7 @@
                 display: none;
             }
 
-            .services-grid {
+            .services-grid, .blog-grid, .contributions-grid {
                 grid-template-columns: 1fr;
             }
         }
@@ -509,47 +609,50 @@
     <!-- Navigation -->
     <nav id="navbar">
         <div class="nav-container">
-            <div class="logo">UberZunn</div>
+            <div class="logo" onclick="showSection('home')">UberZunn</div>
             <ul class="nav-links">
-                <li><a href="#services">Services</a></li>
-                <li><a href="#why-us">Why Us</a></li>
-                <li><a href="#about">About</a></li>
-                <li><button class="nav-cta">Get Started</button></li>
+                <li><a onclick="showSection('services')">Services</a></li>
+                <li><a onclick="showSection('contributions')">Our Work</a></li>
+                <li><a onclick="showSection('about')">About</a></li>
+                <li><a onclick="showSection('blog')">Blog</a></li>
+                <li><button class="nav-cta" onclick="showSection('contact')">Get Started</button></li>
             </ul>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <div class="hero-text">
-                <h1>Cloud Solutions That <span class="gradient-text">Scale Your Business</span></h1>
-                <p>Transform your infrastructure with enterprise-grade cloud consulting, DevOps automation, and cutting-edge solutions tailored to your needs.</p>
-                <div class="hero-buttons">
-                    <button class="btn-primary">Start Your Journey</button>
-                    <button class="btn-secondary">View Our Work</button>
-                </div>
-            </div>
-            <div class="hero-visual">
-                <div class="floating-card card-1">
-                    <div class="card-icon">☁️</div>
-                    <div>
-                        <strong>Cloud Migration</strong>
-                        <p style="margin: 0; color: var(--gray); font-size: 0.9rem;">Seamless transition</p>
+    <!-- Home Section -->
+    <section id="home" class="active">
+        <div class="hero">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Cloud Solutions That <span class="gradient-text">Scale Your Business</span></h1>
+                    <p>Transform your infrastructure with enterprise-grade cloud consulting, DevOps automation, and cutting-edge solutions tailored to your needs.</p>
+                    <div class="hero-buttons">
+                        <button class="btn-primary" onclick="showSection('contact')">Start Your Journey</button>
+                        <button class="btn-secondary" onclick="showSection('contributions')">View Our Work</button>
                     </div>
                 </div>
-                <div class="floating-card card-2">
-                    <div class="card-icon">⚡</div>
-                    <div>
-                        <strong>DevOps Pipeline</strong>
-                        <p style="margin: 0; color: var(--gray); font-size: 0.9rem;">Automated workflows</p>
+                <div class="hero-visual">
+                    <div class="floating-card card-1">
+                        <div class="card-icon">☁️</div>
+                        <div>
+                            <strong>Cloud Migration</strong>
+                            <p style="margin: 0; color: var(--gray); font-size: 0.9rem;">Seamless transition</p>
+                        </div>
                     </div>
-                </div>
-                <div class="floating-card card-3">
-                    <div class="card-icon">🔒</div>
-                    <div>
-                        <strong>Security First</strong>
-                        <p style="margin: 0; color: var(--gray); font-size: 0.9rem;">Enterprise grade</p>
+                    <div class="floating-card card-2">
+                        <div class="card-icon">⚡</div>
+                        <div>
+                            <strong>DevOps Pipeline</strong>
+                            <p style="margin: 0; color: var(--gray); font-size: 0.9rem;">Automated workflows</p>
+                        </div>
+                    </div>
+                    <div class="floating-card card-3">
+                        <div class="card-icon">🔒</div>
+                        <div>
+                            <strong>Security First</strong>
+                            <p style="margin: 0; color: var(--gray); font-size: 0.9rem;">Enterprise grade</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -557,100 +660,258 @@
     </section>
 
     <!-- Services Section -->
-    <section class="services" id="services">
-        <div class="section-header">
-            <span class="section-tag">Our Services</span>
-            <h2>Everything You Need to Succeed</h2>
-            <p>Comprehensive cloud solutions designed to accelerate your digital transformation journey</p>
-        </div>
-        <div class="services-grid">
-            <div class="service-card">
-                <div class="service-icon">☁️</div>
-                <h3>Cloud Architecture</h3>
-                <p>Design and implement scalable, resilient cloud architectures on AWS, Azure, and GCP. We build infrastructure that grows with your business.</p>
+    <section id="services">
+        <div class="services">
+            <div class="section-header">
+                <span class="section-tag">Our Services</span>
+                <h2>Everything You Need to Succeed</h2>
+                <p>Comprehensive cloud solutions designed to accelerate your digital transformation journey</p>
             </div>
-            <div class="service-card">
-                <div class="service-icon">⚙️</div>
-                <h3>DevOps Engineering</h3>
-                <p>Automate your deployment pipeline with CI/CD, infrastructure as code, and containerization. Ship faster, deploy smarter.</p>
-            </div>
-            <div class="service-card">
-                <div class="service-icon">🔒</div>
-                <h3>Security & Compliance</h3>
-                <p>Implement robust security frameworks and ensure compliance with industry standards. Protect what matters most.</p>
-            </div>
-            <div class="service-card">
-                <div class="service-icon">📊</div>
-                <h3>Monitoring & Analytics</h3>
-                <p>Gain deep insights into your infrastructure with real-time monitoring, logging, and analytics solutions.</p>
-            </div>
-            <div class="service-card">
-                <div class="service-icon">🚀</div>
-                <h3>Migration Services</h3>
-                <p>Seamlessly migrate your applications and data to the cloud with zero downtime and minimal disruption.</p>
-            </div>
-            <div class="service-card">
-                <div class="service-icon">💡</div>
-                <h3>Cloud Optimization</h3>
-                <p>Reduce costs and improve performance through intelligent resource optimization and cost management strategies.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Why Choose Us -->
-    <section class="why-us" id="why-us">
-        <div class="why-us-content">
-            <div>
-                <span class="section-tag" style="background: rgba(255, 255, 255, 0.1); color: var(--secondary);">Why UberZunn</span>
-                <h2 style="font-size: 3rem; font-weight: 800; margin: 1.5rem 0;">Built for Performance, Designed for Scale</h2>
-                <ul class="features-list">
-                    <li>
-                        <span class="check-icon">✓</span>
-                        Certified cloud architects with 10+ years experience
-                    </li>
-                    <li>
-                        <span class="check-icon">✓</span>
-                        24/7 support and monitoring for mission-critical systems
-                    </li>
-                    <li>
-                        <span class="check-icon">✓</span>
-                        Cost optimization strategies that reduce cloud spend by 40%
-                    </li>
-                    <li>
-                        <span class="check-icon">✓</span>
-                        Security-first approach with compliance expertise
-                    </li>
-                </ul>
-            </div>
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-number">500+</div>
-                    <div class="stat-label">Projects Delivered</div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">☁️</div>
+                    <h3>AWS & Azure</h3>
+                    <p>Design and implement scalable, resilient cloud architectures on AWS, Azure, and GCP. We build infrastructure that grows with your business.</p>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-number">98%</div>
-                    <div class="stat-label">Client Satisfaction</div>
+                <div class="service-card">
+                    <div class="service-icon">⚙️</div>
+                    <h3>DevOps Consulting</h3>
+                    <p>Automate your deployment pipeline with CI/CD, infrastructure as code, and containerization. Ship faster, deploy smarter.</p>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-number">50+</div>
-                    <div class="stat-label">Enterprise Clients</div>
+                <div class="service-card">
+                    <div class="service-icon">📦</div>
+                    <h3>S3 Object Storage</h3>
+                    <p>Deploy and support S3-compliant object storage services including MINIO and SWIFTSTACK for scalable data management.</p>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-number">24/7</div>
-                    <div class="stat-label">Support Available</div>
+                <div class="service-card">
+                    <div class="service-icon">🤖</div>
+                    <h3>AI & Prompt Engineering</h3>
+                    <p>Leverage AI solutions from OpenAI and AWS to build intelligent applications and automate business processes.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🐳</div>
+                    <h3>Docker Containers & Kubernetes</h3>
+                    <p>Containerize applications and orchestrate with Kubernetes for scalable, portable, and resilient deployments.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🔄</div>
+                    <h3>Reverse Cloud Migration</h3>
+                    <p>Strategically move workloads from public cloud to on-premises infrastructure when it makes business sense, reducing costs significantly.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🏗️</div>
+                    <h3>Open Source PaaS on IaaS</h3>
+                    <p>Build platform-as-a-service solutions on open-source infrastructure including RedHat OpenStack deployments.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">✅</div>
+                    <h3>Software Quality Engineering</h3>
+                    <p>Implement comprehensive quality engineering strategies, test automation, and best practices for reliable software delivery.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="cta-content">
-            <h2>Ready to Transform Your Infrastructure?</h2>
-            <p>Join hundreds of companies that trust UberZunn for their cloud journey. Let's build something amazing together.</p>
-            <div class="hero-buttons" style="justify-content: center;">
-                <button class="btn-primary">Schedule Consultation</button>
-                <button class="btn-secondary">View Case Studies</button>
+    <!-- Contributions Section -->
+    <section id="contributions">
+        <div class="contributions">
+            <div class="section-header">
+                <span class="section-tag">Our Contributions</span>
+                <h2>Proven Track Record of Success</h2>
+                <p>See how we've helped leading organizations transform their infrastructure</p>
+            </div>
+            <div class="contributions-grid">
+                <div class="contribution-card">
+                    <div class="contribution-image">🏢</div>
+                    <div class="contribution-content">
+                        <h3>Azure DevOps Consulting - COSTCO</h3>
+                        <p>Helped COSTCO in their IT transformation journey by building automation pipelines in Azure DevOps for managing virtual infrastructures.</p>
+                    </div>
+                </div>
+                <div class="contribution-card">
+                    <div class="contribution-image">🚀</div>
+                    <div class="contribution-content">
+                        <h3>DevOps for AeroSpace - NASA Contractor</h3>
+                        <p>Architected DevOps infrastructure for Odyssey, a NASA aerospace contractor, supporting flight simulations and navigation to the ISS.</p>
+                    </div>
+                </div>
+                <div class="contribution-card">
+                    <div class="contribution-image">☁️</div>
+                    <div class="contribution-content">
+                        <h3>RedHat OpenStack 16 IaaS</h3>
+                        <p>Deployed RedHat OpenStack on DELL EMC, HPE and commodity hardware with planning and migrations from public cloud to on-prem datacenter.</p>
+                    </div>
+                </div>
+                <div class="contribution-card">
+                    <div class="contribution-image">💰</div>
+                    <div class="contribution-content">
+                        <h3>FinOps for MultiCloud</h3>
+                        <p>Built FinOps-based tools using cloud native APIs to help companies save huge cost margins in cloud waste across AWS, Azure & GCP.</p>
+                    </div>
+                </div>
+                <div class="contribution-card">
+                    <div class="contribution-image">📊</div>
+                    <div class="contribution-content">
+                        <h3>Technical Program Management</h3>
+                        <p>Managed multiple releases in hybrid cloud environments for several software companies, ensuring smooth delivery and coordination.</p>
+                    </div>
+                </div>
+                <div class="contribution-card">
+                    <div class="contribution-image">✅</div>
+                    <div class="contribution-content">
+                        <h3>Quality Engineering Services</h3>
+                        <p>Consulted for Series A startups and enterprises in data storage, CDP, multi-cloud, and SDDC to build quality engineering strategies.</p>
+                    </div>
+                </div>
+                <div class="contribution-card">
+                    <div class="contribution-image">🤖</div>
+                    <div class="contribution-content">
+                        <h3>UI Automation for PrestoDB</h3>
+                        <p>Built end-to-end UI automation for deployment of PrestoDB data lake for early stage startup Ahana IO.</p>
+                    </div>
+                </div>
+                <div class="contribution-card">
+                    <div class="contribution-image">🐳</div>
+                    <div class="contribution-content">
+                        <h3>Platform Services</h3>
+                        <p>Built PaaS layers on existing cloud and on-prem infrastructure to host applications on Kubernetes pods and Docker containers.</p>
+                    </div>
+                </div>
+                <div class="contribution-card">
+                    <div class="contribution-image">📦</div>
+                    <div class="contribution-content">
+                        <h3>S3 Object Storage</h3>
+                        <p>Deployed and supported S3-compliant object storage services including MINIO and SWIFTSTACK for enterprise clients.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="about">
+            <div class="section-header">
+                <span class="section-tag">About Us</span>
+                <h2>How We Got Here</h2>
+            </div>
+            <div class="about-content">
+                <div class="about-image">⚙️</div>
+                <div class="about-text">
+                    <p>We are an experienced and talented group of engineers with groundbreaking ideas designed to contribute towards a better tomorrow. We provide smart solutions for companies of all sizes and pride ourselves on our unparalleled, dedicated service.</p>
+                    <p style="margin-top: 2rem;">At UberZunn, we believe that the right understanding and technological edge can lead companies towards a successful future. Our comprehensive technological solutions help your IT transformation and digital transformation journey achieve greater success.</p>
+                    <p style="margin-top: 2rem;">Our consulting services have a wide range of cutting-edge open-source solutions and DevOps solutions created with an aim to help incorporate the latest technology at your datacenter. UberZunn is continually building upon its technology to empower our clients to do better.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="blog">
+        <div class="blog">
+            <div class="section-header">
+                <span class="section-tag">Our Blog</span>
+                <h2>Latest Insights & Updates</h2>
+                <p>Stay updated with the latest trends in cloud computing, DevOps, and digital transformation</p>
+            </div>
+            <div class="blog-grid">
+                <div class="blog-card" onclick="window.open('https://www.uberzunn.com/single-post/streamlining-devops-processes-with-devops-consulting-services', '_blank')">
+                    <div class="blog-image">⚙️</div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span>Jan 2026</span>
+                            <span>•</span>
+                            <span>4 min read</span>
+                        </div>
+                        <h3>Streamlining DevOps Processes with DevOps Consulting Services</h3>
+                        <p class="blog-excerpt">Discover how integrating DevOps practices can transform IT infrastructure, improve collaboration, and accelerate software delivery...</p>
+                        <a href="https://www.uberzunn.com/single-post/streamlining-devops-processes-with-devops-consulting-services" target="_blank" class="read-more">Read More →</a>
+                    </div>
+                </div>
+                <div class="blog-card" onclick="window.open('https://www.uberzunn.com/single-post/benefits-of-cloud-consulting-maximizing-business-efficiency-with-cloud-consulting-services', '_blank')">
+                    <div class="blog-image">☁️</div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span>Dec 2025</span>
+                            <span>•</span>
+                            <span>5 min read</span>
+                        </div>
+                        <h3>Benefits of Cloud Consulting: Maximizing Business Efficiency</h3>
+                        <p class="blog-excerpt">Learn how cloud consulting services can help maximize business efficiency and drive digital transformation...</p>
+                        <a href="https://www.uberzunn.com/single-post/benefits-of-cloud-consulting-maximizing-business-efficiency-with-cloud-consulting-services" target="_blank" class="read-more">Read More →</a>
+                    </div>
+                </div>
+                <div class="blog-card" onclick="window.open('https://www.uberzunn.com/single-post/understanding-the-role-of-cloud-security-consulting-and-cloud-security-services-benefits', '_blank')">
+                    <div class="blog-image">🔒</div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span>Dec 2025</span>
+                            <span>•</span>
+                            <span>6 min read</span>
+                        </div>
+                        <h3>Understanding Cloud Security Consulting and Services Benefits</h3>
+                        <p class="blog-excerpt">Explore the critical role of cloud security consulting in protecting your infrastructure and data...</p>
+                        <a href="https://www.uberzunn.com/single-post/understanding-the-role-of-cloud-security-consulting-and-cloud-security-services-benefits" target="_blank" class="read-more">Read More →</a>
+                    </div>
+                </div>
+                <div class="blog-card" onclick="window.open('https://www.uberzunn.com/single-post/boosting-efficiency-with-automating-quality-engineering-1', '_blank')">
+                    <div class="blog-image">🤖</div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span>Dec 2025</span>
+                            <span>•</span>
+                            <span>5 min read</span>
+                        </div>
+                        <h3>Automating Quality Engineering: A Key to Digital Transformation</h3>
+                        <p class="blog-excerpt">Discover how automating quality engineering processes can accelerate your digital transformation journey...</p>
+                        <a href="https://www.uberzunn.com/single-post/boosting-efficiency-with-automating-quality-engineering-1" target="_blank" class="read-more">Read More →</a>
+                    </div>
+                </div>
+                <div class="blog-card" onclick="window.open('https://www.uberzunn.com/single-post/comprehensive-guide-to-cloud-migration-evaluation', '_blank')">
+                    <div class="blog-image">🔄</div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span>Nov 2025</span>
+                            <span>•</span>
+                            <span>7 min read</span>
+                        </div>
+                        <h3>Comprehensive Guide to Cloud Migration Evaluation</h3>
+                        <p class="blog-excerpt">A complete guide to evaluating your cloud migration options and choosing the right strategy...</p>
+                        <a href="https://www.uberzunn.com/single-post/comprehensive-guide-to-cloud-migration-evaluation" target="_blank" class="read-more">Read More →</a>
+                    </div>
+                </div>
+                <div class="blog-card" onclick="window.open('https://www.uberzunn.com/single-post/creating-an-effective-devops-roadmap-creation', '_blank')">
+                    <div class="blog-image">📋</div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span>Nov 2025</span>
+                            <span>•</span>
+                            <span>4 min read</span>
+                        </div>
+                        <h3>Creating an Effective DevOps Roadmap</h3>
+                        <p class="blog-excerpt">Learn how to create a comprehensive DevOps roadmap that aligns with your business goals...</p>
+                        <a href="https://www.uberzunn.com/single-post/creating-an-effective-devops-roadmap-creation" target="_blank" class="read-more">Read More →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact/CTA Section -->
+    <section id="contact">
+        <div class="cta-section">
+            <div class="cta-content">
+                <h2>Ready to Transform Your Infrastructure?</h2>
+                <p>Join hundreds of companies that trust UberZunn for their cloud journey. Let's build something amazing together.</p>
+                <div style="max-width: 600px; margin: 0 auto;">
+                    <p style="font-size: 1.1rem; color: var(--dark); margin-bottom: 1rem;"><strong>Get in Touch</strong></p>
+                    <p style="color: var(--gray); margin-bottom: 0.5rem;">📧 Email: admin@uberzunn.com</p>
+                    <p style="color: var(--gray); margin-bottom: 2rem;">📍 Location: California, USA</p>
+                </div>
+                <div class="hero-buttons" style="justify-content: center;">
+                    <button class="btn-primary" onclick="window.location.href='mailto:admin@uberzunn.com'">Schedule Consultation</button>
+                    <button class="btn-secondary" onclick="showSection('contributions')">View Case Studies</button>
+                </div>
             </div>
         </div>
     </section>
@@ -659,43 +920,56 @@
     <footer>
         <div class="footer-content">
             <div class="footer-brand">
-                <div class="logo" style="-webkit-text-fill-color: white;">UberZunn</div>
+                <div class="logo" style="-webkit-text-fill-color: white; color: white;">UberZunn</div>
                 <p>Empowering businesses with cutting-edge cloud solutions and DevOps expertise. Your trusted partner in digital transformation.</p>
             </div>
             <div class="footer-links">
                 <h4>Services</h4>
                 <ul>
-                    <li><a href="#">Cloud Architecture</a></li>
-                    <li><a href="#">DevOps Engineering</a></li>
-                    <li><a href="#">Security</a></li>
-                    <li><a href="#">Migration</a></li>
+                    <li><a onclick="showSection('services')">Cloud Architecture</a></li>
+                    <li><a onclick="showSection('services')">DevOps Engineering</a></li>
+                    <li><a onclick="showSection('services')">Security</a></li>
+                    <li><a onclick="showSection('services')">Migration</a></li>
                 </ul>
             </div>
             <div class="footer-links">
                 <h4>Company</h4>
                 <ul>
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="#">Careers</a></li>
-                    <li><a href="#">Blog</a></li>
-                    <li><a href="#">Contact</a></li>
+                    <li><a onclick="showSection('about')">About Us</a></li>
+                    <li><a onclick="showSection('contributions')">Our Work</a></li>
+                    <li><a onclick="showSection('blog')">Blog</a></li>
+                    <li><a onclick="showSection('contact')">Contact</a></li>
                 </ul>
             </div>
             <div class="footer-links">
                 <h4>Resources</h4>
                 <ul>
-                    <li><a href="#">Documentation</a></li>
-                    <li><a href="#">Case Studies</a></li>
-                    <li><a href="#">Support</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a onclick="showSection('blog')">Case Studies</a></li>
+                    <li><a onclick="showSection('contact')">Support</a></li>
+                    <li><a href="mailto:admin@uberzunn.com">Email Us</a></li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2024 UberZunn. All rights reserved.</p>
+            <p>&copy; 2017-2026 UberZunn. All rights reserved. | System Integrators & Digital Transformation</p>
         </div>
     </footer>
 
     <script>
+        // Navigation functionality
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
         // Navbar scroll effect
         window.addEventListener('scroll', () => {
             const navbar = document.getElementById('navbar');
