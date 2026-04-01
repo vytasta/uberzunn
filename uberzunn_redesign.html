@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UberZunn Cloud Consulting | DevOps & Cloud Solutions</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0066ff;
+            --primary-dark: #0052cc;
+            --secondary: #00d4ff;
+            --dark: #0a0e27;
+            --dark-light: #1a1f3a;
+            --gray: #8b92a7;
+            --light: #f5f7fa;
+            --white: #ffffff;
+            --gradient: linear-gradient(135deg, #0066ff 0%, #00d4ff 100%);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: var(--white);
+        }
+
+        /* Header & Navigation */
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .cta-btn {
+            padding: 0.8rem 2rem;
+            background: var(--gradient);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 102, 255, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 80px;
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(0, 102, 255, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            top: -200px;
+            right: -200px;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-30px); }
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #ffffff 0%, #00d4ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-text p {
+            font-size: 1.3rem;
+            color: var(--gray);
+            margin-bottom: 2rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-primary {
+            padding: 1rem 2.5rem;
+            background: var(--gradient);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-secondary {
+            padding: 1rem 2.5rem;
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 102, 255, 0.4);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: white;
+        }
+
+        .hero-visual {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .tech-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .tech-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .tech-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Services Section */
+        .services {
+            padding: 6rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .section-header p {
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 50px rgba(0, 102, 255, 0.15);
+            border-color: var(--primary);
+        }
+
+        .service-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--gradient);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .service-card p {
+            color: var(--gray);
+            line-height: 1.8;
+        }
+
+        /* Contributions/Portfolio */
+        .contributions {
+            padding: 6rem 2rem;
+            background: var(--light);
+        }
+
+        .contributions-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .contributions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .contribution-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
+        }
+
+        .contribution-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.12);
+        }
+
+        .contribution-image {
+            height: 200px;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+        }
+
+        .contribution-content {
+            padding: 2rem;
+        }
+
+        .contribution-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .contribution-content p {
+            color: var(--gray);
+            line-height: 1.7;
+        }
+
+        /* Blog Section */
+        .blog {
+            padding: 6rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .blog-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.12);
+        }
+
+        .blog-image {
+            height: 250px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+        }
+
+        .blog-content {
+            padding: 2rem;
+        }
+
+        .blog-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .blog-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .blog-content p {
+            color: var(--gray);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .read-more {
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: gap 0.3s;
+        }
+
+        .read-more:hover {
+            gap: 1rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 6rem 2rem;
+            background: var(--dark);
+            color: white;
+        }
+
+        .contact-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .contact-info h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-info p {
+            color: var(--gray);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .contact-form {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 3rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--gradient);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 102, 255, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-light);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero-content {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+
+            .services-grid,
+            .contributions-grid,
+            .blog-grid,
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">UberZunn</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#blog">Blog</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="cta-btn">Get Started</button>
+            <button class="mobile-menu-btn">☰</button>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Transforming DataCenters & IT Infrastructure</h1>
+                <p>Comprehensive cloud consulting services for DevOps, AWS, Azure, OpenStack, and AI solutions</p>
+                <div class="hero-buttons">
+                    <button class="btn-primary">Our Services</button>
+                    <button class="btn-secondary">Learn More</button>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="tech-card">
+                    <div class="tech-icon">☁️</div>
+                    <h3>Cloud Native</h3>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-icon">🚀</div>
+                    <h3>DevOps</h3>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-icon">🤖</div>
+                    <h3>AI & ML</h3>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-icon">🔒</div>
+                    <h3>Security</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="section-header">
+            <h2>Our Consulting Services</h2>
+            <p>Cutting-edge solutions for your digital transformation journey</p>
+        </div>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">⚙️</div>
+                <h3>DevOps Consulting</h3>
+                <p>Build automation pipelines and streamline your software delivery with modern DevOps practices and tools.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">☁️</div>
+                <h3>AWS & Azure</h3>
+                <p>Expert cloud architecture, migration, and optimization services for AWS and Azure platforms.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🐳</div>
+                <h3>Docker & Kubernetes</h3>
+                <p>Container orchestration and management solutions for scalable microservices architecture.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🤖</div>
+                <h3>AI & Prompt Engineering</h3>
+                <p>Leverage OpenAI and AWS AI services to build intelligent applications and automate workflows.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">📦</div>
+                <h3>S3 Object Storage</h3>
+                <p>Deploy and support S3-compliant object storage services including MinIO and SwiftStack.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🔄</div>
+                <h3>Reverse Cloud Migration</h3>
+                <p>Strategic migration from public cloud to on-premise data centers with OpenStack IaaS.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🏗️</div>
+                <h3>OpenStack IaaS</h3>
+                <p>Build enterprise-grade open source PaaS on OpenStack infrastructure with proper sizing and capacity planning.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">✅</div>
+                <h3>Quality Engineering</h3>
+                <p>Comprehensive testing strategy and automation for multi-cloud and on-premise environments.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio/Contributions Section -->
+    <section class="contributions" id="portfolio">
+        <div class="contributions-container">
+            <div class="section-header">
+                <h2>Our Contributions</h2>
+                <p>Real-world impact across industries and technologies</p>
+            </div>
+            <div class="contributions-grid">
+                <div class="contribution-card">
+                    <div class="contribution-image">🏢</div>
+                    <div class="contribution-content">
+                        <h3>COSTCO - Azure DevOps Transformation</h3>
+                        <p>Helped COSTCO in their IT transformation journey by building automation pipelines in Azure DevOps for managing virtual infrastructures.</p>
+                    </div>
+                </div>
+                <div class="contribution-card">
+                    <div class="contribution-image">🚀</div>
+                    <div class="contribution-content">
+                        <h3>NASA - Aerospace DevOps</h3>
+                        <p>Architected DevOps infrastructure for NASA aerospace contractor Odyssey's software engineering projects in flight simulations and ISS navigation.</p>
+                    </div>
+                </div>
+                <div class="contribution-card">
+                    <div class="contribution-image">💰</div>
+                    <div class="contribution-content">
+                        <h3>FinOps for MultiCloud</h3>
+                        <p>Built FinOps tools using cloud native APIs to help companies save significant costs on AWS, Azure, and GCP cloud billing waste.</p>
+                    </div>
+                </div>
+                <div class="contribution-card">
+                    <div class="contribution-image">🔴</div>
+                    <div class="contribution-content">
+                        <h3>RedHat OpenStack Deployments</h3>
+                        <p>Deployed OpenStack on DELL EMC, HPE, and commodity hardware with planning and migrations from public cloud to on-premise data centers.</p>
+                    </div>
+                </div>
+                <div class="contribution-card">
+                    <div class="contribution-image">🎓</div>
+                    <div class="contribution-content">
+                        <h3>HPE Training & Knowledge Transfer (2012-2015)</h3>
+                        <p>Delivered large-scale training sessions to HPE engineering community on OpenStack deployments, covering complete lifecycle from PXE boot to Horizon setup, Nova compute architecture, Neutron networking, and production best practices.</p>
+                    </div>
+                </div>
+                <div class="contribution-card">
+                    <div class="contribution-image">🔧</div>
+                    <div class="contribution-content">
+                        <h3>Iridium - Triple-O Production Deployments</h3>
+                        <p>Deployed RHOPS using Triple-O methodology covering complete OpenStack modules: PXE boot infrastructure, Nova controllers with HAProxy, compute nodes, Neutron networking (gateways, public/private networks), Ironic bare metal reconfigurations, and Glance image management.</p>
+                    </div>
+                </div>
+                <div class="contribution-card">
+                    <div class="contribution-image">💾</div>
+                    <div class="contribution-content">
+                        <h3>Verizon - 24 Petabyte Object Storage Replication</h3>
+                        <p>Extensively managed a 24 petabyte replication datacenter at Verizon using SwiftStack (NVIDIA). Configured object storage, modified Cinder drivers for NetApp storage access, and set up iSCSI targets for block devices across enterprise infrastructure.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <div class="pricing-container">
+            <div class="section-header">
+                <h2>Choose Your Pricing Plan</h2>
+                <p>System Integrators & Digital Transformation Services</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3 class="pricing-title">Quality Assessment & Roadmap</h3>
+                        <div class="pricing-price">$15,000</div>
+                        <div class="pricing-duration">Valid for one month</div>
+                    </div>
+                    
+                    <ul class="pricing-features">
+                        <li>Analysis of escalation patterns and field escape trends</li>
+                        <li>Team structure and process review</li>
+                        <li>Gap analysis using the 19 Test Categories Framework</li>
+                        <li>Identification of highest-risk areas</li>
+                        <li>Custom 90-day quality transformation roadmap</li>
+                        <li>Prioritized initiatives based on business impact</li>
+                        <li>Resource requirements and hiring plan</li>
+                        <li>Quick wins vs. long-term improvements</li>
+                        <li>Success metrics and KPI framework</li>
+                        <li>4 weekly check-in calls (1 hour each)</li>
+                        <li>Email support for tactical questions</li>
+                        <li>Framework templates and playbooks</li>
+                        <li>Final presentation to executive leadership</li>
+                    </ul>
+
+                    <div class="pricing-deliverables">
+                        <h4>Deliverables Include:</h4>
+                        <ul>
+                            <li>Quality Assessment Report (20-30 pages)</li>
+                            <li>90-Day Roadmap with milestones</li>
+                            <li>SQA KPI Dashboard template</li>
+                            <li>Test Coverage Matrix</li>
+                            <li>Executive presentation deck</li>
+                        </ul>
+                    </div>
+
+                    <button class="pricing-btn">Select Plan</button>
+                </div>
+
+                <!-- Add more pricing cards here if you have additional plans -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section class="blog" id="blog">
+        <div class="section-header">
+            <h2>Latest from Our Blog</h2>
+            <p>Insights, tutorials, and industry trends</p>
+        </div>
+        <div class="blog-grid">
+            <div class="blog-card">
+                <div class="blog-image">📝</div>
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span>📅 Nov 15, 2024</span>
+                        <span>•</span>
+                        <span>🏷️ DevOps</span>
+                    </div>
+                    <h3>Optimizing CI/CD Pipelines for Kubernetes</h3>
+                    <p>Learn best practices for building efficient CI/CD pipelines that integrate seamlessly with Kubernetes deployments...</p>
+                    <a href="#" class="read-more">Read More →</a>
+                </div>
+            </div>
+            <div class="blog-card">
+                <div class="blog-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">🤖</div>
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span>📅 Nov 10, 2024</span>
+                        <span>•</span>
+                        <span>🏷️ AI/ML</span>
+                    </div>
+                    <h3>AI-Powered Infrastructure Automation</h3>
+                    <p>Discover how to leverage AI and prompt engineering to automate cloud infrastructure management and reduce operational overhead...</p>
+                    <a href="#" class="read-more">Read More →</a>
+                </div>
+            </div>
+            <div class="blog-card">
+                <div class="blog-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">☁️</div>
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span>📅 Nov 5, 2024</span>
+                        <span>•</span>
+                        <span>🏷️ Cloud</span>
+                    </div>
+                    <h3>The Case for Reverse Cloud Migration</h3>
+                    <p>Why enterprises are moving from public cloud to on-premise OpenStack deployments and how to plan your migration strategy...</p>
+                    <a href="#" class="read-more">Read More →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="contact-container">
+            <div class="contact-info">
+                <h2>Get in Touch</h2>
+                <p>Ready to transform your IT infrastructure? Let's discuss how we can help your business succeed.</p>
+                <div class="contact-details">
+                    <div class="contact-item">
+                        <div class="contact-icon">📍</div>
+                        <div>
+                            <strong>Location</strong>
+                            <p>California, USA</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">📧</div>
+                        <div>
+                            <strong>Email</strong>
+                            <p>info@uberzunn.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">💼</div>
+                        <div>
+                            <strong>Services</strong>
+                            <p>DevOps, Cloud, AI Consulting</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="contact-form">
+                <form>
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" placeholder="Your name">
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" placeholder="your@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Message</label>
+                        <textarea placeholder="Tell us about your project..."></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 UberZunn Cloud Consulting. All rights reserved.</p>
+            <p>Transforming DataCenters and Information Technology</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.style.boxShadow = '0 5px 30px rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.05)';
+            }
+        });
+
+        // Form submission
+        document.querySelector('form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you for your message! We will get back to you soon.');
+        });
+    </script>
+</body>
+</html>
