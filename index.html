@@ -612,6 +612,7 @@
             <div class="logo" onclick="showSection('home')">UberZunn</div>
             <ul class="nav-links">
                 <li><a onclick="showSection('services')">Services</a></li>
+                <li><a onclick="showSection('agents')">AI Agents</a></li>
                 <li><a onclick="showSection('contributions')">Our Work</a></li>
                 <li><a onclick="showSection('about')">About</a></li>
                 <li><a onclick="showSection('blog')">Blog</a></li>
@@ -648,10 +649,10 @@
                         </div>
                     </div>
                     <div class="floating-card card-3">
-                        <div class="card-icon">🔒</div>
+                        <div class="card-icon">🤖</div>
                         <div>
-                            <strong>Security First</strong>
-                            <p style="margin: 0; color: var(--gray); font-size: 0.9rem;">Enterprise grade</p>
+                            <strong>AI Agents</strong>
+                            <p style="margin: 0; color: var(--gray); font-size: 0.9rem;">Autonomous workflows</p>
                         </div>
                     </div>
                 </div>
@@ -708,6 +709,75 @@
                     <h3>Software Quality Engineering</h3>
                     <p>Implement comprehensive quality engineering strategies, test automation, and best practices for reliable software delivery.</p>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Agents Section -->
+    <section id="agents">
+        <div class="contributions">
+            <div class="section-header">
+                <span class="section-tag">AI Agents</span>
+                <h2>Open-Source Agents You Can Download</h2>
+                <p>Autonomous AI agents built for real infrastructure and storage workloads — free to download, run, and extend</p>
+            </div>
+            <div class="contributions-grid">
+
+                <div class="contribution-card" onclick="window.open('https://github.com/uberzunn/benchmark_agent/archive/refs/heads/main.zip')">
+                    <div class="contribution-image">⚡</div>
+                    <div class="contribution-content">
+                        <h3>Storage Benchmark Agent</h3>
+                        <p>Natural language → fio, vdbench, iozone &amp; iometer running in parallel. Parses IOPS, throughput, latency and CPU into a full side-by-side comparison report.</p>
+                        <div style="margin-top:1rem; display:flex; gap:0.75rem; flex-wrap:wrap;">
+                            <span style="background:var(--light);color:var(--primary);padding:0.25rem 0.75rem;border-radius:50px;font-size:0.8rem;font-weight:600;">LangGraph</span>
+                            <span style="background:var(--light);color:var(--primary);padding:0.25rem 0.75rem;border-radius:50px;font-size:0.8rem;font-weight:600;">fio</span>
+                            <span style="background:var(--light);color:var(--primary);padding:0.25rem 0.75rem;border-radius:50px;font-size:0.8rem;font-weight:600;">vdbench</span>
+                            <span style="background:var(--light);color:var(--primary);padding:0.25rem 0.75rem;border-radius:50px;font-size:0.8rem;font-weight:600;">iozone</span>
+                            <span style="background:var(--light);color:var(--primary);padding:0.25rem 0.75rem;border-radius:50px;font-size:0.8rem;font-weight:600;">iometer</span>
+                        </div>
+                        <div style="margin-top:1.25rem; display:flex; gap:0.75rem;">
+                            <a href="https://github.com/uberzunn/benchmark_agent/archive/refs/heads/main.zip" style="padding:0.6rem 1.25rem;background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:white;border-radius:50px;font-weight:600;font-size:0.9rem;text-decoration:none;" onclick="event.stopPropagation()">⬇ Download</a>
+                            <a href="https://github.com/uberzunn/benchmark_agent" target="_blank" style="padding:0.6rem 1.25rem;border:2px solid var(--primary);color:var(--primary);border-radius:50px;font-weight:600;font-size:0.9rem;text-decoration:none;" onclick="event.stopPropagation()">GitHub →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contribution-card" onclick="window.open('https://github.com/uberzunn/rest_api_agents/archive/refs/heads/main.zip')">
+                    <div class="contribution-image">🔗</div>
+                    <div class="contribution-content">
+                        <h3>REST API Agent (LangGraph + CrewAI)</h3>
+                        <p>Two complete agent implementations — LangGraph and CrewAI — that autonomously call REST APIs with retry logic, exponential back-off, and Gemini rate-limit throttling built in.</p>
+                        <div style="margin-top:1rem; display:flex; gap:0.75rem; flex-wrap:wrap;">
+                            <span style="background:var(--light);color:var(--primary);padding:0.25rem 0.75rem;border-radius:50px;font-size:0.8rem;font-weight:600;">LangGraph</span>
+                            <span style="background:var(--light);color:var(--primary);padding:0.25rem 0.75rem;border-radius:50px;font-size:0.8rem;font-weight:600;">CrewAI</span>
+                            <span style="background:var(--light);color:var(--primary);padding:0.25rem 0.75rem;border-radius:50px;font-size:0.8rem;font-weight:600;">Gemini</span>
+                        </div>
+                        <div style="margin-top:1.25rem; display:flex; gap:0.75rem;">
+                            <a href="https://github.com/uberzunn/rest_api_agents/archive/refs/heads/main.zip" style="padding:0.6rem 1.25rem;background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:white;border-radius:50px;font-weight:600;font-size:0.9rem;text-decoration:none;" onclick="event.stopPropagation()">⬇ Download</a>
+                            <a href="https://github.com/uberzunn" target="_blank" style="padding:0.6rem 1.25rem;border:2px solid var(--primary);color:var(--primary);border-radius:50px;font-weight:600;font-size:0.9rem;text-decoration:none;" onclick="event.stopPropagation()">GitHub →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contribution-card">
+                    <div class="contribution-image">☸️</div>
+                    <div class="contribution-content">
+                        <h3>PrestoDB EKS Scaling Agent</h3>
+                        <p>Replaced a brittle Selenium workflow with an AI agent that autonomously scales PrestoDB on AWS EKS from 0 → 80 Kubernetes pods for large financial data query workloads.</p>
+                        <div style="margin-top:1rem; display:flex; gap:0.75rem; flex-wrap:wrap;">
+                            <span style="background:var(--light);color:var(--primary);padding:0.25rem 0.75rem;border-radius:50px;font-size:0.8rem;font-weight:600;">AWS EKS</span>
+                            <span style="background:var(--light);color:var(--primary);padding:0.25rem 0.75rem;border-radius:50px;font-size:0.8rem;font-weight:600;">Kubernetes</span>
+                            <span style="background:var(--light);color:var(--primary);padding:0.25rem 0.75rem;border-radius:50px;font-size:0.8rem;font-weight:600;">PrestoDB</span>
+                        </div>
+                        <div style="margin-top:1.25rem;">
+                            <a href="https://github.com/uberzunn" target="_blank" style="padding:0.6rem 1.25rem;border:2px solid var(--primary);color:var(--primary);border-radius:50px;font-weight:600;font-size:0.9rem;text-decoration:none;">GitHub →</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div style="text-align:center; margin-top:3rem;">
+                <a href="agents.html" style="padding:1rem 2.5rem;background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:white;border-radius:50px;font-weight:600;font-size:1rem;text-decoration:none;display:inline-block;">View Full Agent Showcase →</a>
             </div>
         </div>
     </section>
@@ -798,9 +868,9 @@
             <div class="about-content">
                 <div class="about-image">⚙️</div>
                 <div class="about-text">
-                    <p>We are an experienced and talented group of engineers with groundbreaking ideas designed to contribute towards a better tomorrow. We provide smart solutions for companies operating at scale with infrastructure challenges.</p>
-                    <p style="margin-top: 2rem;">At UberZunn, we believe that the right understanding and technological edge can lead companies towards a successful future. Our comprehensive tech stack spans across multiple domains - from cloud architecture to DevOps engineering.</p>
-                    <p style="margin-top: 2rem;">Our consulting services have a wide range of cutting-edge open-source solutions and DevOps solutions created with an aim to help incorporate the latest technological advancements.</p>
+                    <p>We are an experienced and talented group of engineers with groundbreaking ideas designed to contribute towards a better tomorrow. We provide smart solutions for companies operat[...]
+                    <p style="margin-top: 2rem;">At UberZunn, we believe that the right understanding and technological edge can lead companies towards a successful future. Our comprehensive tech stac[...]
+                    <p style="margin-top: 2rem;">Our consulting services have a wide range of cutting-edge open-source solutions and DevOps solutions created with an aim to help incorporate the latest[...]
                 </div>
             </div>
         </div>
