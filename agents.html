@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI agents — vytasta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:       #ffffff;
+    --bg2:      #f7f7f5;
+    --bg3:      #f0efec;
+    --text:     #1a1a18;
+    --text2:    #5a5a56;
+    --text3:    #9a9a96;
+    --border:   #e4e4e0;
+    --accent:   #2563eb;
+    --accent-bg:#eff6ff;
+    --accent-t: #1d4ed8;
+    --teal:     #0f6e56;
+    --teal-bg:  #e1f5ee;
+    --teal-t:   #085041;
+    --purple:   #534ab7;
+    --purple-bg:#eeedfe;
+    --purple-t: #3c3489;
+    --amber:    #854f0b;
+    --amber-bg: #faeeda;
+    --amber-t:  #633806;
+    --radius:   10px;
+    --mono:     'JetBrains Mono', monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:       #18181a; --bg2: #222224; --bg3: #2a2a2c;
+      --text:     #f0f0ec; --text2: #a0a09c; --text3: #606060;
+      --border:   #333336;
+      --accent:   #3b82f6; --accent-bg: #1e3a5f; --accent-t: #93c5fd;
+      --teal:     #1d9e75; --teal-bg: #04342c; --teal-t: #9fe1cb;
+      --purple:   #7f77dd; --purple-bg: #26215c; --purple-t: #cecbf6;
+      --amber:    #ef9f27; --amber-bg: #412402; --amber-t: #fac775;
+    }
+  }
+
+  body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); font-size: 15px; line-height: 1.7; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+
+  nav { border-bottom: 1px solid var(--border); padding: 18px 0; }
+  nav .inner { display: flex; align-items: center; justify-content: space-between; }
+  .nav-logo { font-weight: 600; font-size: 15px; color: var(--text); text-decoration: none; }
+  .nav-links { display: flex; gap: 28px; }
+  .nav-links a { font-size: 14px; color: var(--text2); text-decoration: none; }
+  .nav-links a:hover, .nav-links a.active { color: var(--text); }
+
+  .page-header { padding: 48px 0 40px; border-bottom: 1px solid var(--border); }
+  .back-link { font-size: 13px; color: var(--text3); text-decoration: none; display: inline-flex; align-items: center; gap: 4px; margin-bottom: 20px; }
+  .back-link:hover { color: var(--accent); text-decoration: none; }
+  .page-header h1 { font-size: 30px; font-weight: 600; letter-spacing: -0.4px; margin-bottom: 8px; }
+  .page-header p { font-size: 15px; color: var(--text2); max-width: 520px; }
+
+  /* SHOWCASE CARD */
+  .showcase { padding: 56px 0; border-bottom: 1px solid var(--border); }
+  .showcase:last-of-type { border-bottom: none; }
+  .showcase-inner { display: grid; grid-template-columns: 1fr 320px; gap: 48px; align-items: start; }
+  @media (max-width: 680px) { .showcase-inner { grid-template-columns: 1fr; } }
+
+  .showcase-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px; margin-bottom: 12px; text-transform: uppercase; letter-spacing: .04em; }
+  .showcase h2 { font-size: 22px; font-weight: 600; letter-spacing: -0.3px; margin-bottom: 10px; }
+  .showcase-desc { font-size: 14px; color: var(--text2); line-height: 1.75; margin-bottom: 20px; }
+
+  .feature-list { list-style: none; margin-bottom: 24px; display: flex; flex-direction: column; gap: 8px; }
+  .feature-list li { font-size: 13px; color: var(--text2); display: flex; align-items: flex-start; gap: 8px; }
+  .feature-list li::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--teal); margin-top: 7px; flex-shrink: 0; }
+
+  .tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 24px; }
+  .tag { font-size: 11px; font-weight: 500; padding: 3px 9px; border-radius: 20px; }
+  .tag-teal   { background: var(--teal-bg);   color: var(--teal-t); }
+  .tag-purple { background: var(--purple-bg); color: var(--purple-t); }
+  .tag-amber  { background: var(--amber-bg);  color: var(--amber-t); }
+  .tag-accent { background: var(--accent-bg); color: var(--accent-t); }
+
+  .action-row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .btn { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; padding: 9px 16px; border-radius: var(--radius); border: 1px solid var(--border); background: var(--bg); color: var(--text); text-decoration: none; transition: background .15s; }
+  .btn:hover { background: var(--bg2); text-decoration: none; }
+  .btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .btn-primary:hover { opacity: .88; background: var(--accent); }
+  .btn-ghost { border-color: transparent; color: var(--text2); }
+  .btn-ghost:hover { background: var(--bg2); color: var(--text); }
+
+  /* DIAGRAM PANEL */
+  .diagram-panel { background: var(--bg2); border: 1px solid var(--border); border-radius: 14px; padding: 20px; }
+  .diagram-title { font-size: 11px; font-weight: 500; color: var(--text3); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 16px; }
+  .flow { display: flex; flex-direction: column; gap: 0; }
+  .flow-node { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; font-size: 12px; }
+  .flow-node-label { font-weight: 500; color: var(--text); }
+  .flow-node-sub { font-size: 11px; color: var(--text3); margin-top: 2px; }
+  .flow-arrow { text-align: center; color: var(--text3); font-size: 13px; padding: 4px 0; }
+  .flow-parallel { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .flow-parallel .flow-node { font-size: 11px; text-align: center; }
+  .flow-bracket { text-align: center; font-size: 11px; color: var(--text3); margin: 4px 0; }
+
+  .metric-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 16px; }
+  .metric { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; }
+  .metric-val { font-size: 16px; font-weight: 600; color: var(--text); font-family: var(--mono); }
+  .metric-label { font-size: 10px; color: var(--text3); margin-top: 2px; }
+
+  /* INSTALL BLOCK */
+  .install-block { background: var(--bg3); border-radius: 8px; padding: 12px 14px; margin-top: 16px; }
+  .install-label { font-size: 10px; font-weight: 500; color: var(--text3); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 8px; }
+  .install-cmd { font-family: var(--mono); font-size: 11px; color: var(--text2); line-height: 1.8; }
+  .install-cmd span { color: var(--teal); }
+
+  footer { padding: 32px 0; border-top: 1px solid var(--border); margin-top: 24px; }
+  .footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+  .footer-text { font-size: 13px; color: var(--text3); }
+  .footer-links { display: flex; gap: 20px; }
+  .footer-links a { font-size: 13px; color: var(--text3); text-decoration: none; }
+  .footer-links a:hover { color: var(--text); }
+
+  svg.icon { width: 14px; height: 14px; vertical-align: -2px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container inner">
+    <a href="/" class="nav-logo">vytasta</a>
+    <div class="nav-links">
+      <a href="index.html#agents">Agents</a>
+      <a href="agents.html" class="active">All projects</a>
+      <a href="https://github.com/vytasta" target="_blank">GitHub</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="container">
+    <a href="index.html" class="back-link">
+      <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      Back to home
+    </a>
+    <h1>AI agents &amp; downloadable tools</h1>
+    <p>Open-source agents built for real storage and infrastructure workloads. Free to download, run, and extend.</p>
+  </div>
+</div>
+
+<main>
+
+<!-- ══════════════════════════════════════════
+     AGENT 1 — STORAGE BENCHMARK
+     ══════════════════════════════════════════ -->
+<section class="showcase" id="benchmark">
+  <div class="container">
+    <div class="showcase-inner">
+
+      <div>
+        <div class="showcase-badge tag-teal">
+          <svg class="icon" style="width:12px;height:12px" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          Storage &amp; performance
+        </div>
+        <h2>Storage benchmark agent</h2>
+        <p class="showcase-desc">
+          Describe a storage workload in plain English. The agent generates configs for fio, vdbench, iozone, and iometer, runs all four in parallel, parses IOPS / throughput / latency / CPU, and produces a full side-by-side comparison report saved to disk.
+        </p>
+
+        <ul class="feature-list">
+          <li>Natural language → fio + vdbench + iozone + iometer configs automatically</li>
+          <li>All 4 tools run concurrently via ThreadPoolExecutor — no waiting</li>
+          <li>Parses IOPS, throughput, P99 latency, and CPU from each tool</li>
+          <li>Full comparison report saved as JSON + text on every run</li>
+          <li>Dry-run mode — full simulation with no tools or API key needed</li>
+          <li>GitHub Actions CI included — green badge on every push</li>
+          <li>Rate-limit safe — 5s throttle keeps under Gemini free tier (15 RPM)</li>
+        </ul>
+
+        <div class="tag-row">
+          <span class="tag tag-teal">LangGraph</span>
+          <span class="tag tag-accent">Gemini 1.5 Flash</span>
+          <span class="tag tag-accent">fio</span>
+          <span class="tag tag-accent">vdbench</span>
+          <span class="tag tag-accent">iozone</span>
+          <span class="tag tag-accent">iometer</span>
+          <span class="tag tag-accent">ThreadPoolExecutor</span>
+          <span class="tag tag-teal">Python 3.9+</span>
+        </div>
+
+        <div class="action-row">
+          <a href="https://github.com/vytasta/benchmark_agent/archive/refs/heads/main.zip" class="btn btn-primary">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download .zip
+          </a>
+          <a href="https://github.com/vytasta/benchmark_agent" class="btn" target="_blank">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            View on GitHub
+          </a>
+          <a href="https://github.com/vytasta/benchmark_agent/blob/main/README.md" class="btn btn-ghost" target="_blank">Docs</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="diagram-panel">
+          <div class="diagram-title">Agent flow</div>
+          <div class="flow">
+            <div class="flow-node">
+              <div class="flow-node-label">Natural language prompt</div>
+              <div class="flow-node-sub">"70/30 R/W, 128K, 32 threads, 60s"</div>
+            </div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-node" style="border-color:var(--teal);background:var(--teal-bg)">
+              <div class="flow-node-label" style="color:var(--teal-t)">Planner (Gemini)</div>
+              <div class="flow-node-sub" style="color:var(--teal)">generates 4 configs</div>
+            </div>
+            <div class="flow-arrow">↓  parallel</div>
+            <div class="flow-parallel">
+              <div class="flow-node"><div class="flow-node-label">fio</div></div>
+              <div class="flow-node"><div class="flow-node-label">vdbench</div></div>
+              <div class="flow-node"><div class="flow-node-label">iozone</div></div>
+              <div class="flow-node"><div class="flow-node-label">iometer</div></div>
+            </div>
+            <div class="flow-arrow">↓  parse all</div>
+            <div class="flow-node" style="border-color:var(--teal);background:var(--teal-bg)">
+              <div class="flow-node-label" style="color:var(--teal-t)">Comparator (Gemini)</div>
+              <div class="flow-node-sub" style="color:var(--teal)">full report + recommendation</div>
+            </div>
+          </div>
+          <div class="metric-row">
+            <div class="metric"><div class="metric-val">~68K</div><div class="metric-label">IOPS (sim)</div></div>
+            <div class="metric"><div class="metric-val">4355</div><div class="metric-label">MB/s (sim)</div></div>
+            <div class="metric"><div class="metric-val">650µs</div><div class="metric-label">read lat</div></div>
+            <div class="metric"><div class="metric-val">&lt;3%</div><div class="metric-label">tool variance</div></div>
+          </div>
+          <div class="install-block">
+            <div class="install-label">Quick start</div>
+            <div class="install-cmd">
+              <span>$</span> pip install -r requirements.txt<br>
+              <span>$</span> export DRY_RUN=true<br>
+              <span>$</span> python storage_benchmark_agent.py
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     AGENT 2 — REST API
+     ══════════════════════════════════════════ -->
+<section class="showcase" id="rest-api">
+  <div class="container">
+    <div class="showcase-inner">
+
+      <div>
+        <div class="showcase-badge tag-purple">
+          <svg class="icon" style="width:12px;height:12px" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          API &amp; automation
+        </div>
+        <h2>REST API agent (LangGraph + CrewAI)</h2>
+        <p class="showcase-desc">
+          Two complete agent implementations — LangGraph and CrewAI — both targeting REST APIs from natural language prompts. Includes retry logic, exponential back-off on 5xx, Gemini free-tier throttling, and a side-by-side comparison runner.
+        </p>
+
+        <ul class="feature-list">
+          <li>LangGraph agent: stateful graph with conditional retry edges and MemorySaver checkpointing</li>
+          <li>CrewAI agent: 4-role crew — researcher, API caller, parser, writer</li>
+          <li>5s throttle between LLM calls — stays under Gemini's 15 RPM free tier</li>
+          <li>Exponential back-off with jitter on 429 rate limit errors</li>
+          <li>Side-by-side runner compares both frameworks on the same query</li>
+          <li>Demo target: JSONPlaceholder — no auth, runs immediately</li>
+        </ul>
+
+        <div class="tag-row">
+          <span class="tag tag-purple">LangGraph</span>
+          <span class="tag tag-purple">CrewAI</span>
+          <span class="tag tag-accent">Gemini 1.5 Flash</span>
+          <span class="tag tag-accent">REST API</span>
+          <span class="tag tag-purple">Python 3.9+</span>
+        </div>
+
+        <div class="action-row">
+          <a href="https://github.com/vytasta/rest_api_agents/archive/refs/heads/main.zip" class="btn btn-primary">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download .zip
+          </a>
+          <a href="https://github.com/vytasta/rest_api_agents" class="btn" target="_blank">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            View on GitHub
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <div class="diagram-panel">
+          <div class="diagram-title">LangGraph vs CrewAI</div>
+          <div style="font-size:11px;font-weight:500;color:var(--text3);margin-bottom:8px">LangGraph — graph-based</div>
+          <div class="flow">
+            <div class="flow-node" style="border-color:var(--purple);background:var(--purple-bg)">
+              <div class="flow-node-label" style="color:var(--purple-t)">Planner node</div>
+              <div class="flow-node-sub" style="color:var(--purple)">LLM decides endpoint</div>
+            </div>
+            <div class="flow-arrow">↓ tool call</div>
+            <div class="flow-node">
+              <div class="flow-node-label">REST executor</div>
+              <div class="flow-node-sub">HTTP request + retry</div>
+            </div>
+            <div class="flow-arrow">↓ 200 OK</div>
+            <div class="flow-node" style="border-color:var(--purple);background:var(--purple-bg)">
+              <div class="flow-node-label" style="color:var(--purple-t)">Formatter node</div>
+              <div class="flow-node-sub" style="color:var(--purple)">plain English answer</div>
+            </div>
+          </div>
+          <div style="border-top:1px solid var(--border);margin:16px 0 12px"></div>
+          <div style="font-size:11px;font-weight:500;color:var(--text3);margin-bottom:8px">CrewAI — role-based</div>
+          <div class="flow-parallel" style="grid-template-columns:1fr 1fr;gap:6px">
+            <div class="flow-node"><div class="flow-node-label" style="font-size:11px">Researcher</div></div>
+            <div class="flow-node"><div class="flow-node-label" style="font-size:11px">API caller</div></div>
+            <div class="flow-node"><div class="flow-node-label" style="font-size:11px">Parser</div></div>
+            <div class="flow-node"><div class="flow-node-label" style="font-size:11px">Writer</div></div>
+          </div>
+          <div class="install-block" style="margin-top:14px">
+            <div class="install-label">Quick start</div>
+            <div class="install-cmd">
+              <span>$</span> pip install langgraph crewai<br>
+              <span>$</span> export GOOGLE_API_KEY="AIza..."<br>
+              <span>$</span> python rest_api_agents_starter.py
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     AGENT 3 — PRESTO EKS
+     ══════════════════════════════════════════ -->
+<section class="showcase" id="presto">
+  <div class="container">
+    <div class="showcase-inner">
+
+      <div>
+        <div class="showcase-badge tag-amber">
+          <svg class="icon" style="width:12px;height:12px" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          Kubernetes &amp; cloud
+        </div>
+        <h2>PrestoDB EKS scaling agent</h2>
+        <p class="showcase-desc">
+          Replaced a fragile Selenium-based browser automation workflow with an AI agent that autonomously scales a PrestoDB cluster on AWS EKS from 0 → 80 Kubernetes pods — supporting large-scale financial data query workloads at a financial institution.
+        </p>
+
+        <ul class="feature-list">
+          <li>Replaces Selenium browser automation with goal-driven agent execution</li>
+          <li>Scales PrestoDB from 0 → 80 EKS pods based on query load signals</li>
+          <li>Monitors pod readiness and coordinator registration before declaring scale complete</li>
+          <li>Fault-tolerant — retries failed pod schedules and handles node pressure</li>
+          <li>Built for a financial institution handling large distributed SQL queries</li>
+        </ul>
+
+        <div class="tag-row">
+          <span class="tag tag-amber">AWS EKS</span>
+          <span class="tag tag-amber">Kubernetes</span>
+          <span class="tag tag-amber">PrestoDB</span>
+          <span class="tag tag-accent">Python</span>
+          <span class="tag tag-accent">kubectl</span>
+          <span class="tag tag-amber">agentic AI</span>
+        </div>
+
+        <div class="action-row">
+          <a href="https://github.com/vytasta/presto_eks_agent" class="btn btn-primary" target="_blank">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            View on GitHub
+          </a>
+          <a href="index.html#agents" class="btn btn-ghost">← Back to agents</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="diagram-panel">
+          <div class="diagram-title">Scaling flow</div>
+          <div class="flow">
+            <div class="flow-node">
+              <div class="flow-node-label">Query load signal</div>
+              <div class="flow-node-sub">CPU / queue depth threshold</div>
+            </div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-node" style="border-color:var(--amber);background:var(--amber-bg)">
+              <div class="flow-node-label" style="color:var(--amber-t)">Scale decision agent</div>
+              <div class="flow-node-sub" style="color:var(--amber)">LLM decides target replica count</div>
+            </div>
+            <div class="flow-arrow">↓  kubectl scale</div>
+            <div class="flow-parallel">
+              <div class="flow-node"><div class="flow-node-label" style="font-size:10px">pods 1–20</div></div>
+              <div class="flow-node"><div class="flow-node-label" style="font-size:10px">pods 21–40</div></div>
+              <div class="flow-node"><div class="flow-node-label" style="font-size:10px">pods 41–60</div></div>
+              <div class="flow-node"><div class="flow-node-label" style="font-size:10px">pods 61–80</div></div>
+            </div>
+            <div class="flow-arrow">↓  readiness check</div>
+            <div class="flow-node" style="border-color:var(--teal);background:var(--teal-bg)">
+              <div class="flow-node-label" style="color:var(--teal-t)">80 pods ready</div>
+              <div class="flow-node-sub" style="color:var(--teal)">coordinator registered</div>
+            </div>
+          </div>
+          <div class="metric-row">
+            <div class="metric"><div class="metric-val">0→80</div><div class="metric-label">pod scale</div></div>
+            <div class="metric"><div class="metric-val">0</div><div class="metric-label">Selenium deps</div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     AGENT 4 — CONNECTATHON NFS
+     ══════════════════════════════════════════ -->
+<section class="showcase" id="connectathon">
+  <div class="container">
+    <div class="showcase-inner">
+
+      <div>
+        <div class="showcase-badge tag-teal">
+          <svg class="icon" style="width:12px;height:12px" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          NFS &amp; storage testing
+        </div>
+        <h2>Connectathon NFS Agent</h2>
+        <p class="showcase-desc">
+          Runs NFS Connectathon test suites — basic, general, special, and lock — across NFSv3, NFSv4, and NFSv4.1 or multiple mount points. Parses pass/fail/skip per suite per version, detects regressions, and produces a full comparison report.
+        </p>
+
+        <ul class="feature-list">
+          <li>Covers all 4 suites: basic (b), general (g), special (s), lock (l)</li>
+          <li>Compares across NFSv3, NFSv4, NFSv4.1 and multiple mount points</li>
+          <li>Detects regressions and improvements vs baseline version</li>
+          <li>Explains expected failures (e.g. NFSv4 root squash / setuid)</li>
+          <li>Dry-run mode — full simulation, no NFS server needed</li>
+          <li>Reports saved as JSON + text on every run</li>
+        </ul>
+
+        <div class="tag-row">
+          <span class="tag tag-teal">LangGraph</span>
+          <span class="tag tag-accent">Gemini 1.5 Flash</span>
+          <span class="tag tag-accent">NFSv3</span>
+          <span class="tag tag-accent">NFSv4</span>
+          <span class="tag tag-accent">NFSv4.1</span>
+          <span class="tag tag-teal">Connectathon</span>
+          <span class="tag tag-teal">Python 3.9+</span>
+        </div>
+
+        <div class="action-row">
+          <a href="https://github.com/vytasta/connectathon_agent/archive/refs/heads/main.zip" class="btn btn-primary" target="_blank">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download .zip
+          </a>
+          <a href="https://github.com/vytasta/connectathon_agent" class="btn" target="_blank">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            View on GitHub
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <div class="diagram-panel">
+          <div class="diagram-title">Agent flow</div>
+          <div class="flow">
+            <div class="flow-node">
+              <div class="flow-node-label">Prompt</div>
+              <div class="flow-node-sub">"Run b,g,s,l on server:/export NFSv3 v4 v4.1"</div>
+            </div>
+            <div class="flow-arrow">↓ per version</div>
+            <div class="flow-parallel">
+              <div class="flow-node"><div class="flow-node-label">NFSv3</div></div>
+              <div class="flow-node"><div class="flow-node-label">NFSv4</div></div>
+              <div class="flow-node"><div class="flow-node-label">NFSv4.1</div></div>
+              <div class="flow-node"><div class="flow-node-label">mount2</div></div>
+            </div>
+            <div class="flow-arrow">↓ parse each</div>
+            <div class="flow-node" style="border-color:var(--teal);background:var(--teal-bg)">
+              <div class="flow-node-label" style="color:var(--teal-t)">Compare + report</div>
+              <div class="flow-node-sub" style="color:var(--teal)">regressions flagged</div>
+            </div>
+          </div>
+          <div class="metric-row">
+            <div class="metric"><div class="metric-val">4</div><div class="metric-label">suites</div></div>
+            <div class="metric"><div class="metric-val">3+</div><div class="metric-label">NFS versions</div></div>
+          </div>
+          <div class="install-block">
+            <div class="install-label">Quick start</div>
+            <div class="install-cmd">
+              <span>$</span> export DRY_RUN=true<br>
+              <span>$</span> python connectathon_agent.py
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     AGENT 5 — OPENSTACK TEMPEST
+     ══════════════════════════════════════════ -->
+<section class="showcase" id="tempest">
+  <div class="container">
+    <div class="showcase-inner">
+
+      <div>
+        <div class="showcase-badge tag-purple">
+          <svg class="icon" style="width:12px;height:12px" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          OpenStack &amp; cloud testing
+        </div>
+        <h2>OpenStack Tempest Agent</h2>
+        <p class="showcase-desc">
+          Runs OpenStack Tempest test groups — compute, network, storage, identity, image — across two environment configs (e.g. prod vs staging). Surfaces regressions, improvements, and exact failed test names with a full comparison report.
+        </p>
+
+        <ul class="feature-list">
+          <li>Covers compute, network, storage, identity, image, object groups</li>
+          <li>Compares two configs side by side — prod vs staging, A vs B</li>
+          <li>Lists exact failing test names per group per config</li>
+          <li>Detects new regressions and fixed tests between configs</div></li>
+          <li>Generates tempest.conf automatically from prompt parameters</li>
+          <li>Dry-run mode — no OpenStack environment needed to test</li>
+        </ul>
+
+        <div class="tag-row">
+          <span class="tag tag-purple">LangGraph</span>
+          <span class="tag tag-accent">Gemini 1.5 Flash</span>
+          <span class="tag tag-accent">OpenStack</span>
+          <span class="tag tag-accent">Tempest</span>
+          <span class="tag tag-accent">Keystone</span>
+          <span class="tag tag-purple">Python 3.9+</span>
+        </div>
+
+        <div class="action-row">
+          <a href="https://github.com/vytasta/tempest_agent/archive/refs/heads/main.zip" class="btn btn-primary" target="_blank">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download .zip
+          </a>
+          <a href="https://github.com/vytasta/tempest_agent" class="btn" target="_blank">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            View on GitHub
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <div class="diagram-panel">
+          <div class="diagram-title">Agent flow</div>
+          <div class="flow">
+            <div class="flow-node">
+              <div class="flow-node-label">Prompt</div>
+              <div class="flow-node-sub">"Compare prod vs staging, run compute network storage"</div>
+            </div>
+            <div class="flow-arrow">↓ per config</div>
+            <div class="flow-parallel">
+              <div class="flow-node"><div class="flow-node-label">prod</div></div>
+              <div class="flow-node"><div class="flow-node-label">staging</div></div>
+            </div>
+            <div class="flow-arrow">↓ parse each</div>
+            <div class="flow-node" style="border-color:var(--purple);background:var(--purple-bg)">
+              <div class="flow-node-label" style="color:var(--purple-t)">Compare + report</div>
+              <div class="flow-node-sub" style="color:var(--purple)">regressions + failed tests</div>
+            </div>
+          </div>
+          <div class="metric-row">
+            <div class="metric"><div class="metric-val">6</div><div class="metric-label">test groups</div></div>
+            <div class="metric"><div class="metric-val">2+</div><div class="metric-label">configs</div></div>
+          </div>
+          <div class="install-block">
+            <div class="install-label">Quick start</div>
+            <div class="install-cmd">
+              <span>$</span> export DRY_RUN=true<br>
+              <span>$</span> python tempest_agent.py
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container footer-inner">
+    <span class="footer-text">vytasta · storage &amp; AI engineering · 2026</span>
+    <div class="footer-links">
+      <a href="https://github.com/vytasta" target="_blank">GitHub</a>
+      <a href="index.html">Home</a>
+      <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
